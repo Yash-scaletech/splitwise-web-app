@@ -1,0 +1,10 @@
+export const OPEN_MODAL = 'OPEN_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
+
+export const OPEN_SUB_MODAL = 'OPEN_SUB_MODAL';
+export const CLOSE_SUB_MODAL = 'CLOSE_SUB_MODAL';
+
+export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
+export const REMOVE_NOTIFICATION = 'REMOVE_NOTIFICATION';
+
+export const LOGOUT = 'LOGOUT';

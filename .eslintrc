@@ -1,0 +1,57 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"plugins": ["react", "react-hooks", "@typescript-eslint"],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 2021,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"extends": ["react-app", "plugin:react/recommended", "plugin:react/jsx-runtime", "prettier"],
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	},
+	"rules": {
+		"@typescript-eslint/no-explicit-any": "off",
+		"no-useless-escape": 0,
+		"react/no-typos": 2,
+		"react/no-direct-mutation-state": 2,
+		"react/no-redundant-should-component-update": 2,
+		"react/sort-comp": [
+			2,
+			{
+				"order": ["static-methods", "lifecycle", "render", "everything-else"]
+			}
+		],
+		"react/no-unused-state": 2,
+		"react/self-closing-comp": 1,
+		"react/void-dom-elements-no-children": 2,
+		"react/jsx-uses-vars": 1,
+		"react/prop-types": 0,
+		"@typescript-eslint/no-unused-vars": 2,
+		"@typescript-eslint/camelcase": 0,
+		"@typescript-eslint/naming-convention": [
+			"error",
+			{
+				"selector": "interface",
+				"format": ["PascalCase"]
+			}
+		],
+		"no-empty-pattern": 2,
+		"@typescript-eslint/no-empty-interface": [
+			"error",
+			{
+				"allowSingleExtends": true
+			}
+		],
+		"@typescript-eslint/explicit-function-return-type": 0,
+		"@typescript-eslint/explicit-module-boundary-types": "off"
+	}
+}

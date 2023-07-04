@@ -1,0 +1,12 @@
+@import '../../moduleStylesWrapper.scss';
+
+.modal {
+	width: $full-width;
+	height: $full-height;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba($color: $black-color, $alpha: 0.6);
+	z-index: 999;
+	will-change: auto;
+}

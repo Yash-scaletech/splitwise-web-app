@@ -1,0 +1,90 @@
+{
+	"name": "bots-partner-website",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"start": "BROWSER=none env-cmd -e dev react-scripts start",
+		"build:dev": "GENERATE_SOURCEMAP=false env-cmd -e dev react-scripts build",
+		"build:staging": "GENERATE_SOURCEMAP=false env-cmd -e staging react-scripts build",
+		"build:production": "GENERATE_SOURCEMAP=false env-cmd -e production react-scripts build",
+		"test": "react-scripts test",
+		"prepare": "husky install",
+		"pre-commit": "lint-staged",
+		"eject": "react-scripts eject",
+		"lint": "eslint src/**/*.{tsx,ts,js,jsx}"
+	},
+	"dependencies": {
+		"axios": "^0.26.1",
+		"crypto-js": "^4.1.1",
+		"formik": "^1.5.4",
+		"i18n": "^0.15.0",
+		"intl-tel-input": "^17.0.16",
+		"lodash": "^4.17.21",
+		"lottie-react": "^2.3.1",
+		"moment": "^2.29.3",
+		"node-sass": "^7.0.1",
+		"query-string": "^7.1.1",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-hot-toast": "^2.4.0",
+		"react-i18next": "^11.17.0",
+		"react-phone-number-input": "^3.2.16",
+		"react-redux": "^8.0.0",
+		"react-router-dom": "^6.3.0",
+		"react-scripts": "5.0.1",
+		"react-window": "^1.8.7",
+		"redux": "^4.2.0",
+		"sass": "^1.63.6",
+		"sass-loader": "^13.3.2",
+		"typescript": "^4.6.3",
+		"util": "^0.12.4",
+		"uuid": "^8.3.2",
+		"web-vitals": "^2.1.4",
+		"webpack": "^5.88.1",
+		"yup": "^0.32.11"
+	},
+	"devDependencies": {
+		"@types/axios": "^0.14.0",
+		"@types/crypto-js": "^4.1.1",
+		"@types/lodash": "^4.14.182",
+		"@types/moment": "^2.13.0",
+		"@types/node": "^16.11.27",
+		"@types/query-string": "^6.3.0",
+		"@types/react": "^17.0.2",
+		"@types/react-dom": "^17.0.2",
+		"@types/react-redux": "^7.1.24",
+		"@types/react-router-dom": "^5.3.3",
+		"@types/react-window": "^1.8.5",
+		"@types/redux": "^3.6.0",
+		"@types/redux-thunk": "^2.1.0",
+		"@types/uuid": "^8.3.4",
+		"env-cmd": "^10.1.0",
+		"eslint": "^8.13.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-react": "^7.31.10",
+		"husky": "^7.0.4",
+		"lint-staged": "^12.4.0",
+		"prettier": "^2.6.2"
+	},
+	"lint-staged": {
+		"./src/**/*.{ts,tsx}": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"./src/**/*.{scss,json}": [
+			"prettier --write"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
+}

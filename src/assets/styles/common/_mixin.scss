@@ -1,0 +1,210 @@
+@mixin margin($value...) {
+	margin: $value;
+}
+
+@mixin marginTop($value) {
+	margin-top: $value;
+}
+
+@mixin marginBottom($value) {
+	margin-bottom: $value;
+}
+
+@mixin marginLeft($value) {
+	margin-left: $value;
+}
+
+@mixin marginRight($value) {
+	margin-right: $value;
+}
+
+@mixin padding($value...) {
+	padding: $value;
+}
+
+@mixin paddingTop($value) {
+	padding-top: $value;
+}
+
+@mixin paddingBottom($value) {
+	padding-bottom: $value;
+}
+
+@mixin paddingLeft($value) {
+	padding-left: $value;
+}
+
+@mixin paddingRight($value) {
+	padding-right: $value;
+}
+
+@mixin transition($property, $duration, $timingFun: '') {
+	@if $timingFun== '' {
+		-webkit-transition: $property $duration;
+		transition: $property $duration;
+	} @else {
+		-webkit-transition: $property $duration $timingFun;
+		transition: $property $duration $timingFun;
+	}
+}
+
+@mixin button($size: 'large', $type: 'default') {
+	height: 48px;
+	@include padding(0 16px);
+	line-height: 17px;
+	font-size: 0.875rem;
+	border-radius: $border-radius-default;
+	color: $white-color;
+	border: none;
+	font-weight: $font-medium;
+	box-sizing: border-box;
+	text-align: center;
+
+	@if $size== 'small' {
+		min-width: 86px;
+		height: 24px;
+		@include padding(0 8px);
+		line-height: 24px;
+		font-size: 0.625rem;
+	}
+
+	&:is(.btn--xs) {
+		height: 32px;
+		@include padding(0 16px);
+		line-height: 32px;
+		font-size: 0.625rem;
+		border-radius: $border-radius-sm;
+	}
+
+	&:is(.btn--rounded) {
+		border-radius: 100px;
+		height: 40px;
+		line-height: 40px;
+	}
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+@mixin buttonBordered($size: 'large', $border-c: '', $text-color: '') {
+	line-height: 46px;
+	border: 1px solid $border-c;
+	color: $text-color;
+	background-color: transparent;
+
+	&:is(.btn--rounded) {
+		line-height: 38px !important;
+	}
+
+	&:is(.btn--xs) {
+		line-height: 30px;
+	}
+}
+
+@mixin buttonWithIcon($icon-position: 'left', $size: 'large') {
+	svg {
+		width: 16px;
+		height: 16px;
+
+		@if $size== 'small' {
+			@if $icon-position== 'left' {
+				@include marginRight(4px);
+			} @else {
+				@include marginLeft(4px);
+			}
+		} @else {
+			@if $icon-position== 'left' {
+				@include marginRight(8px);
+			} @else {
+				@include marginLeft(8px);
+			}
+		}
+	}
+}
+
+@mixin getShadesColorClasses($colors, $property, $isImportant: '') {
+	@each $key, $value in $colors {
+		&-#{$key} {
+			@if $isImportant == 'important' {
+				#{$property}: $value !important;
+			} @else {
+				#{$property}: $value;
+			}
+		}
+	}
+}
+
+@mixin phone-up {
+	@media (min-width: #{$grid-breakpoint-sm}px) {
+		@content;
+	}
+}
+
+@mixin tablet-up {
+	@media (min-width: #{$grid-breakpoint-md}px) {
+		@content;
+	}
+}
+
+@mixin desktop-up {
+	@media (min-width: #{$grid-breakpoint-lg}px) {
+		@content;
+	}
+}
+
+@mixin xl-up {
+	@media (min-width: #{$grid-breakpoint-xl}px) {
+		@content;
+	}
+}
+
+@mixin xxxl-up {
+	@media (min-width: #{$grid-breakpoint-xxxl}px) {
+		@content;
+	}
+}
+
+//down
+@mixin mobile-down {
+	@media (max-width: #{$grid-breakpoint-md - 1}px) {
+		@content;
+	}
+}
+
+@mixin tablet-down {
+	@media (max-width: #{$grid-breakpoint-lg - 1}px) {
+		@content;
+	}
+}
+
+@mixin desktop-down {
+	@media (max-width: #{$grid-breakpoint-xl - 1}px) {
+		@content;
+	}
+}
+
+@mixin desktop-large-down {
+	@media (max-width: #{$grid-breakpoint-xxl - 1}px) {
+		@content;
+	}
+}
+
+//only
+@mixin mobile-only {
+	@media (max-width: #{$grid-breakpoint-md - 1}px) {
+		@content;
+	}
+}
+
+@mixin tablet-only {
+	@media (min-width: #{$grid-breakpoint-md}px) and (max-width: #{$grid-breakpoint-lg - 1}px) {
+		@content;
+	}
+}
+
+@mixin desktop-only {
+	@media (min-width: #{$grid-breakpoint-lg - 1}px) {
+		@content;
+	}
+}

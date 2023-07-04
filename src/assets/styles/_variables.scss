@@ -1,0 +1,81 @@
+// Theme color palette variables
+$shades: (
+	0: #ffffff,
+	100: #000000
+);
+
+$white-color: map-get(
+	$map: $shades,
+	$key: 0
+);
+$black-color: map-get(
+	$map: $shades,
+	$key: 100
+);
+
+//Font family
+$font: 'Inter';
+$font-druck: 'Druck';
+
+//Font Weight Variables
+$font-light: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-bold: 700;
+$font-super: 900;
+
+//latter Spacing variables
+$letter-spacing-base: 0.5px !default;
+$letter-spacing-lg: 2px !default;
+$letter-spacing-xl: 4px !default;
+$l-space-n-base: -1px !default;
+
+//Line Height variables
+$line-height-default: 1.5;
+
+//Font size variables
+$font-size-xs: 0.8125rem;
+$font-size-sm: 0.875rem;
+$font-size-default: 0.9375rem; // 0.9375rem = 15px
+$font-size-browser-default: 1rem;
+$font-size-md: 1.0625rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.5rem;
+
+// width and height values variables
+$full-width: 100%;
+$full-height: 100%;
+
+//Container width variables
+$container-default-width: 80%;
+$container-full-width: $full-width;
+$container-max-width: 1200px;
+
+//Border radius width variables
+$border-radius-default: 6px;
+$border-radius-xs: 2px;
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 10px;
+$border-radius-xl: 12px;
+$border-radius-circle: 50%;
+
+$app-container-width: 560px;
+
+$grid-breakpoint-xs: 0;
+$grid-breakpoint-sm: 576;
+$grid-breakpoint-md: 768;
+$grid-breakpoint-lg: 1024; //main break point
+$grid-breakpoint-xl: 1200;
+$grid-breakpoint-xxl: 1400;
+$grid-breakpoint-xxxl: 2200;
+
+$grid-breakpoints: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 1024px,
+	xl: 1200px,
+	xxl: 1400px,
+	xxxl: 2200px
+);
