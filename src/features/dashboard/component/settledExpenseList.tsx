@@ -29,9 +29,11 @@ const SettledExpenseList = () => {
 					</div>
 				))
 			) : (
-				<p>No settled expenses yet.</p>
+				<p className="no-settled-expenses-message">No settled expenses yet.</p>
 			)}
-			<Link to="/expense-list">Back to Expense List</Link>
+			<Link to="/expense-list" className="back-link">
+				Back to Expense List
+			</Link>
 		</div>
 	);
 };

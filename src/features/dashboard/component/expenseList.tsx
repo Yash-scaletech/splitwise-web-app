@@ -122,7 +122,9 @@ const ExpenseList = () => {
 				<h1 className="no--margin">Expense List</h1>
 				<div>
 					<Link to="/add-expense">Add Expense</Link>
-					<button onClick={() => navigate('/settled-expenses')}>Settled Expenses</button>
+					<button className="settled-expenses-button" onClick={() => navigate('/settled-expenses')}>
+						Settled Expenses
+					</button>
 				</div>
 			</div>
 			<div className="differences">
@@ -144,11 +146,11 @@ const ExpenseList = () => {
 								))}
 							</div>
 						) : (
-							<p>No individual owes to display.</p>
+							<p className="no-differences-message">No individual owes to display.</p>
 						)}
 					</div>
 				) : (
-					<p>No differences for you to display.</p>
+					<p className="no-differences-message">No differences for you to display.</p>
 				)}
 			</div>
 			<div className="expenses">
@@ -165,7 +167,7 @@ const ExpenseList = () => {
 						</div>
 					))
 				) : (
-					<p>No pending expenses.</p>
+					<p className="no-expenses-message">No pending expenses.</p>
 				)}
 			</div>
 		</div>
