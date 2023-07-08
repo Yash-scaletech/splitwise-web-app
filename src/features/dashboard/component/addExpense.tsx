@@ -14,7 +14,7 @@ const AddExpense = () => {
 	const [participants, setParticipants] = useState<string[]>([]);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const people = ['John', 'Jane', 'Mark'];
+	const people = ['Yash', 'Bhavy', 'Satvik', 'Harsh', 'Ishit', 'Tirth'];
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;

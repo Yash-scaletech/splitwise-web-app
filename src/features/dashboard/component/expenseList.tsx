@@ -7,31 +7,49 @@ import '../style/dashboard.scss';
 
 const ExpenseList = () => {
 	const [expenses, setExpenses] = useState<IExpense[]>([]);
+	const [settledExpenses, setSettledExpenses] = useState<IExpense[]>([]);
 
 	useEffect(() => {
 		// Retrieve expense data from localStorage or set initial data
 		const storedExpenses = localStorage.getItem('expenses');
+
 		if (storedExpenses) {
 			setExpenses(JSON.parse(storedExpenses));
 		} else {
 			const initialExpenses: IExpense[] = [
 				{
 					description: 'Dinner',
-					amount: 50,
-					paidBy: 'John',
-					participants: ['John', 'Jane', 'Mark'],
+					amount: 480,
+					paidBy: 'Harsh',
+					participants: ['Yash', 'Harsh', 'Ishit'],
 					settled: false
 				}
-				// Add more initial expenses if needed
 			];
 			setExpenses(initialExpenses);
 			localStorage.setItem('expenses', JSON.stringify(initialExpenses));
 		}
 	}, []);
 
+	useEffect(() => {
+		const storedSettleExpenses = localStorage.getItem('settleExpenses');
+
+		if (storedSettleExpenses) {
+			setSettledExpenses(JSON.parse(storedSettleExpenses));
+		}
+	}, [expenses]);
+
 	const handleSettlePayment = (index: number) => {
 		const updatedExpenses = [...expenses];
-		updatedExpenses[index].settled = true;
+		const settledExpense = updatedExpenses.splice(index, 1)[0];
+
+		const storedSettleExpenses = localStorage.getItem('settleExpenses');
+		if (storedSettleExpenses) {
+			const parsedSettleExpenses = JSON.parse(storedSettleExpenses);
+			localStorage.setItem('settleExpenses', JSON.stringify([...parsedSettleExpenses, settledExpense]));
+		} else {
+			localStorage.setItem('settleExpenses', JSON.stringify([settledExpense]));
+		}
+
 		setExpenses(updatedExpenses);
 		localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
 	};
@@ -50,7 +68,6 @@ const ExpenseList = () => {
 		return totalExpense.toFixed(2);
 	};
 
-	const settledExpenses = expenses.filter((expense) => expense.settled);
 	const pendingExpenses = expenses.filter((expense) => !expense.settled);
 
 	return (
@@ -82,7 +99,7 @@ const ExpenseList = () => {
 			</div>
 			<div className="differences">
 				<h2>Differences</h2>
-				{['John', 'Jane', 'Mark'].map((person, index) => (
+				{['Yash', 'Bhavy', 'Satvik', 'Harsh', 'Ishit', 'Tirth'].map((person, index) => (
 					<p key={index}>
 						{person}: {calculateDifference(person)}
 					</p>
