@@ -56,7 +56,7 @@ const AddExpense = () => {
 			} else {
 				localStorage.setItem('expenses', JSON.stringify([expense]));
 			}
-			navigate('/');
+			navigate('/expense-list');
 		} else {
 			setErrorMessage('Please fill in all fields');
 		}

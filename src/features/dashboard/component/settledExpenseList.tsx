@@ -9,7 +9,6 @@ const SettledExpenseList = () => {
 	const [settledExpenses, setSettledExpenses] = useState<IExpense[]>([]);
 
 	useEffect(() => {
-		// Retrieve settled expenses data from localStorage
 		const storedSettleExpenses = localStorage.getItem('settleExpenses');
 		if (storedSettleExpenses) {
 			setSettledExpenses(JSON.parse(storedSettleExpenses));
@@ -19,15 +18,19 @@ const SettledExpenseList = () => {
 	return (
 		<div className="settled-expense-list">
 			<h1>Settled Expenses</h1>
-			{settledExpenses.map((expense, index) => (
-				<div className="expense" key={index}>
-					<p>{expense.description}</p>
-					<p>Amount: {expense.amount}</p>
-					<p>Paid By: {expense.paidBy}</p>
-					<p>Participants: {expense.participants.join(', ')}</p>
-					<p>Settled</p>
-				</div>
-			))}
+			{settledExpenses.length > 0 ? (
+				settledExpenses.map((expense, index) => (
+					<div className="expense" key={index}>
+						<p>{expense.description}</p>
+						<p>Amount: {expense.amount}</p>
+						<p>Paid By: {expense.paidBy}</p>
+						<p>Participants: {expense.participants.join(', ')}</p>
+						<p>Settled</p>
+					</div>
+				))
+			) : (
+				<p>No settled expenses yet.</p>
+			)}
 			<Link to="/expense-list">Back to Expense List</Link>
 		</div>
 	);

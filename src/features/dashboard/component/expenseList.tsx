@@ -127,30 +127,46 @@ const ExpenseList = () => {
 			</div>
 			<div className="differences">
 				<h2>Differences</h2>
-				<p>Total Difference for You: {totalDifference.toFixed(2)}</p>
-				<h3>Individual Amounts</h3>
-				{owedStatements.map((statement, index) => (
-					<p key={index}>{statement}</p>
-				))}
-				<h3>Individual Owes to You</h3>
-				{Object.entries(individualOwe).map(([participant, oweAmount]) => (
-					<p key={participant}>
-						{participant} owes You ${oweAmount.toFixed(2)}
-					</p>
-				))}
+				{owedStatements.length > 0 ? (
+					<div>
+						<p>Total Difference for You: {totalDifference.toFixed(2)}</p>
+						<h3>Individual Amounts</h3>
+						{owedStatements.map((statement, index) => (
+							<p key={index}>{statement}</p>
+						))}
+						{Object.entries(individualOwe).length > 0 ? (
+							<div>
+								<h3>Individual Owes to You</h3>
+								{Object.entries(individualOwe).map(([participant, oweAmount]) => (
+									<p key={participant}>
+										{participant} owes You ${oweAmount.toFixed(2)}
+									</p>
+								))}
+							</div>
+						) : (
+							<p>No individual owes to display.</p>
+						)}
+					</div>
+				) : (
+					<p>No differences for you to display.</p>
+				)}
 			</div>
 			<div className="expenses">
 				<h2>Pending Expenses</h2>
-				{pendingExpenses.map((expense, index) => (
-					<div className="expense" key={index}>
-						<p>{expense.description}</p>
-						<p>Amount: {expense.amount}</p>
-						<p>Paid By: {expense.paidBy}</p>
-						<p>Participants: {expense.participants.join(', ')}</p>
-						<button onClick={() => handleSettlePayment(index)}>Settle Payment</button>
-						<p>{calculateDifference(expense)}</p>
-					</div>
-				))}
+				{pendingExpenses.length > 0 ? (
+					pendingExpenses.map((expense, index) => (
+						<div className="expense" key={index}>
+							<p>{expense.description}</p>
+							<p>Amount: {expense.amount}</p>
+							<p>Paid By: {expense.paidBy}</p>
+							<p>Participants: {expense.participants.join(', ')}</p>
+							<button onClick={() => handleSettlePayment(index)}>Settle Payment</button>
+							<p>{calculateDifference(expense)}</p>
+						</div>
+					))
+				) : (
+					<p>No pending expenses.</p>
+				)}
 			</div>
 		</div>
 	);
