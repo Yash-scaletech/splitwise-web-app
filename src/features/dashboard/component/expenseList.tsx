@@ -72,6 +72,7 @@ const ExpenseList = () => {
 		let totalOwe = 0;
 		let totalLent = 0;
 		const owedStatements: string[] = [];
+		const individualOwe: { [participant: string]: number } = {};
 
 		expenses.forEach((expense) => {
 			const { amount, paidBy, participants } = expense;
@@ -84,21 +85,41 @@ const ExpenseList = () => {
 						.forEach((participant) => {
 							owedStatements.push(`${participant} owes You $${share.toFixed(2)}`);
 							totalOwe += share;
+
+							if (individualOwe[participant]) {
+								individualOwe[participant] += share;
+							} else {
+								individualOwe[participant] = share;
+							}
 						});
 				} else {
 					owedStatements.push(`You owe ${paidBy} $${share.toFixed(2)}`);
 					totalOwe += share;
+
+					if (individualOwe[paidBy]) {
+						individualOwe[paidBy] -= share;
+					} else {
+						individualOwe[paidBy] = -share;
+					}
 				}
 			} else if (paidBy === 'You') {
 				totalLent += share;
+
+				participants.forEach((participant) => {
+					if (individualOwe[participant]) {
+						individualOwe[participant] += share;
+					} else {
+						individualOwe[participant] = share;
+					}
+				});
 			}
 		});
 
 		const totalDifference = totalOwe - totalLent;
-		return { owedStatements, totalDifference };
+		return { owedStatements, individualOwe, totalDifference };
 	};
 
-	const { owedStatements, totalDifference } = calculateDifferencePerson();
+	const { owedStatements, totalDifference, individualOwe } = calculateDifferencePerson();
 
 	const pendingExpenses = expenses.filter((expense) => !expense.settled);
 
@@ -136,6 +157,12 @@ const ExpenseList = () => {
 				<h3>Individual Amounts</h3>
 				{owedStatements.map((statement, index) => (
 					<p key={index}>{statement}</p>
+				))}
+				<h3>Individual Owes to You</h3>
+				{Object.entries(individualOwe).map(([participant, oweAmount]) => (
+					<p key={participant}>
+						{participant} owes You ${oweAmount.toFixed(2)}
+					</p>
 				))}
 			</div>
 			<Link to="/add-expense">Add Expense</Link>
