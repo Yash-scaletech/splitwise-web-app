@@ -18,6 +18,9 @@ const SettledExpenseList = () => {
 	return (
 		<div className="settled-expense-list">
 			<h1>Settled Expenses</h1>
+			<Link to="/expense-list" className="back-link">
+				Back to Expense List
+			</Link>
 			{settledExpenses.length > 0 ? (
 				settledExpenses.map((expense, index) => (
 					<div className="expense" key={index}>
@@ -31,9 +34,6 @@ const SettledExpenseList = () => {
 			) : (
 				<p className="no-settled-expenses-message">No settled expenses yet.</p>
 			)}
-			<Link to="/expense-list" className="back-link">
-				Back to Expense List
-			</Link>
 		</div>
 	);
 };

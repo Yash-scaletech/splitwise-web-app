@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { IExpense } from '../interface/dashboard';
 
@@ -118,14 +118,14 @@ const ExpenseList = () => {
 
 	return (
 		<div className="expense-list">
-			<div className="flex align-items--center">
-				<h1 className="no--margin">Expense List</h1>
-				<div>
-					<Link to="/add-expense">Add Expense</Link>
-					<button className="settled-expenses-button" onClick={() => navigate('/settled-expenses')}>
-						Settled Expenses
-					</button>
-				</div>
+			<h1 className="no--margin">Expense List</h1>
+			<div className="flex align-items--center justify-content--end">
+				<button className="settled-expenses-button mr--15" onClick={() => navigate('/add-expense')}>
+					Add Expense
+				</button>
+				<button className="settled-expenses-button" onClick={() => navigate('/settled-expenses')}>
+					Settled Expenses
+				</button>
 			</div>
 			<div className="differences">
 				<h2>Differences</h2>
