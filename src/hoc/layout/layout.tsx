@@ -1,7 +1,7 @@
 const Layout: React.FC = (props) => {
 	return (
 		<div
-			className="app width--full"
+			className="app width--full m--0-auto layout-container"
 			style={
 				{
 					'--screen-height': `${window.innerHeight}px`

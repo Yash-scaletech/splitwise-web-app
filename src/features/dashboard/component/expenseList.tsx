@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { IExpense } from '../interface/dashboard';
 
@@ -7,7 +7,8 @@ import '../style/dashboard.scss';
 
 const ExpenseList = () => {
 	const [expenses, setExpenses] = useState<IExpense[]>([]);
-	const [settledExpenses, setSettledExpenses] = useState<IExpense[]>([]);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		// Retrieve expense data from localStorage or set initial data
@@ -29,14 +30,6 @@ const ExpenseList = () => {
 			localStorage.setItem('expenses', JSON.stringify(initialExpenses));
 		}
 	}, []);
-
-	useEffect(() => {
-		const storedSettleExpenses = localStorage.getItem('settleExpenses');
-
-		if (storedSettleExpenses) {
-			setSettledExpenses(JSON.parse(storedSettleExpenses));
-		}
-	}, [expenses]);
 
 	const handleSettlePayment = (index: number) => {
 		const updatedExpenses = [...expenses];
@@ -125,31 +118,12 @@ const ExpenseList = () => {
 
 	return (
 		<div className="expense-list">
-			<h1>Expense List</h1>
-			<div className="expenses">
-				<h2>Settled Expenses</h2>
-				{settledExpenses.map((expense, index) => (
-					<div className="expense" key={index}>
-						<p>{expense.description}</p>
-						<p>Amount: {expense.amount}</p>
-						<p>Paid By: {expense.paidBy}</p>
-						<p>Participants: {expense.participants.join(', ')}</p>
-						<p>Settled</p>
-					</div>
-				))}
-			</div>
-			<div className="expenses">
-				<h2>Pending Expenses</h2>
-				{pendingExpenses.map((expense, index) => (
-					<div className="expense" key={index}>
-						<p>{expense.description}</p>
-						<p>Amount: {expense.amount}</p>
-						<p>Paid By: {expense.paidBy}</p>
-						<p>Participants: {expense.participants.join(', ')}</p>
-						<button onClick={() => handleSettlePayment(index)}>Settle Payment</button>
-						<p>{calculateDifference(expense)}</p>
-					</div>
-				))}
+			<div className="flex align-items--center">
+				<h1 className="no--margin">Expense List</h1>
+				<div>
+					<Link to="/add-expense">Add Expense</Link>
+					<button onClick={() => navigate('/settled-expenses')}>Settled Expenses</button>
+				</div>
 			</div>
 			<div className="differences">
 				<h2>Differences</h2>
@@ -165,7 +139,19 @@ const ExpenseList = () => {
 					</p>
 				))}
 			</div>
-			<Link to="/add-expense">Add Expense</Link>
+			<div className="expenses">
+				<h2>Pending Expenses</h2>
+				{pendingExpenses.map((expense, index) => (
+					<div className="expense" key={index}>
+						<p>{expense.description}</p>
+						<p>Amount: {expense.amount}</p>
+						<p>Paid By: {expense.paidBy}</p>
+						<p>Participants: {expense.participants.join(', ')}</p>
+						<button onClick={() => handleSettlePayment(index)}>Settle Payment</button>
+						<p>{calculateDifference(expense)}</p>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };
