@@ -21,7 +21,7 @@ const ExpenseList = () => {
 					description: 'Dinner',
 					amount: 480,
 					paidBy: 'Harsh',
-					participants: ['Yash', 'Harsh', 'Ishit'],
+					participants: ['You', 'Harsh', 'Ishit'],
 					settled: false
 				}
 			];
@@ -54,18 +54,18 @@ const ExpenseList = () => {
 		localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
 	};
 
-	const calculateDifference = (person: string) => {
-		const totalExpense = expenses.reduce((total, expense) => {
-			if (expense.paidBy === person) {
-				return total + expense.amount;
+	const calculateDifference = (expense: IExpense) => {
+		const { amount, paidBy, participants } = expense;
+		const share = amount / participants.length;
+		const owedStatements: string[] = [];
+
+		participants.forEach((participant) => {
+			if (participant !== paidBy) {
+				owedStatements.push(`${participant} owes ${paidBy} $${share.toFixed(2)}`);
 			}
-			if (expense.participants.includes(person)) {
-				const share = expense.amount / expense.participants.length;
-				return total - share;
-			}
-			return total;
-		}, 0);
-		return totalExpense.toFixed(2);
+		});
+
+		return owedStatements.join('\n');
 	};
 
 	const pendingExpenses = expenses.filter((expense) => !expense.settled);
@@ -94,17 +94,16 @@ const ExpenseList = () => {
 						<p>Paid By: {expense.paidBy}</p>
 						<p>Participants: {expense.participants.join(', ')}</p>
 						<button onClick={() => handleSettlePayment(index)}>Settle Payment</button>
+						<p>{calculateDifference(expense)}</p>
 					</div>
 				))}
 			</div>
-			<div className="differences">
+			{/* <div className="differences">
 				<h2>Differences</h2>
-				{['Yash', 'Bhavy', 'Satvik', 'Harsh', 'Ishit', 'Tirth'].map((person, index) => (
-					<p key={index}>
-						{person}: {calculateDifference(person)}
-					</p>
+				{['You', 'Bhavy', 'Satvik', 'Harsh', 'Ishit', 'Tirth'].map((person, index) => (
+					<p key={index}>{calculateDifference(person)}</p>
 				))}
-			</div>
+			</div> */}
 			<Link to="/add-expense">Add Expense</Link>
 		</div>
 	);
