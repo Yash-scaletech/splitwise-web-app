@@ -88,7 +88,7 @@ const ExpenseList = () => {
 				const isPaidByYou = paidBy === 'You';
 				const isParticipantYou = participant === 'You';
 				const shareColor = isPaidByYou ? 'green' : isParticipantYou ? 'red' : 'black';
-				const shareStatement = `${participant} owes ${paidBy} $${share.toFixed(2)}`;
+				const shareStatement = `${participant} owes ${paidBy} ₹${share.toFixed(2)}`;
 
 				const owedStatement = (
 					<p
@@ -136,7 +136,7 @@ const ExpenseList = () => {
 					{participantsOweYou.length > 0 ? (
 						participantsOweYou.map(({ participant, amount }, index) => (
 							<p key={index} className="green font-size--browser-default line-height--21 font--bold">
-								{participant} owes You ${amount.toFixed(2)}
+								{participant} owes You ₹{amount.toFixed(2)}
 							</p>
 						))
 					) : (
@@ -150,7 +150,7 @@ const ExpenseList = () => {
 					{youOweParticipants.length > 0 ? (
 						youOweParticipants.map(({ participant, amount }, index) => (
 							<p key={index} className="red font-size--browser-default line-height--21 font--bold">
-								You owe {participant} ${amount.toFixed(2)}
+								You owe {participant} ₹{amount.toFixed(2)}
 							</p>
 						))
 					) : (
