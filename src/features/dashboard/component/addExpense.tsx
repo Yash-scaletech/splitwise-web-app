@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { IExpense } from '../interface/dashboard';
 
 import '../style/dashboard.scss';
+import { Link } from 'react-router-dom';
 
 const AddExpense = () => {
 	const navigate = useNavigate();
@@ -63,11 +64,11 @@ const AddExpense = () => {
 	};
 
 	return (
-		<div className="add-expense flex flex--column align-items--center mt--30">
-			<h1 className="mb--32">Add Expense</h1>
+		<div className="add-expense flex flex--column align-items--center padding--20">
+			<h1 className="no--margin font-size--32 mb--20">Add Expense</h1>
 			<form onSubmit={handleSubmit} className="form">
 				<div className="flex flex--column mb--16">
-					<label htmlFor="description" className="mb--8">
+					<label htmlFor="description" className="font-size--18 font--bold line-height--16 mt--10 mb--8">
 						Description
 					</label>
 					<input
@@ -80,7 +81,7 @@ const AddExpense = () => {
 					/>
 				</div>
 				<div className="flex flex--column mb--16">
-					<label htmlFor="amount" className="mb--8">
+					<label htmlFor="amount" className="font-size--18 font--bold line-height--16 mb--8">
 						Amount
 					</label>
 					<input
@@ -93,7 +94,7 @@ const AddExpense = () => {
 					/>
 				</div>
 				<div className="flex flex--column mb--16">
-					<label htmlFor="paidBy" className="mb--8">
+					<label htmlFor="paidBy" className="font-size--18 font--bold line-height--16 mb--8">
 						Paid By
 					</label>
 					<select
@@ -112,9 +113,12 @@ const AddExpense = () => {
 					</select>
 				</div>
 				<div className="flex flex--column mb--16">
-					<p className="mt--10">Participants</p>
+					<p className="font-size--18 font--bold line-height--16 mt--10 mb--10">Participants</p>
 					{people.map((person, index) => (
-						<label key={index} className="check-wrapper pointer mb--10">
+						<label
+							key={index}
+							className="check-wrapper position--relative font-size--22 font--medium pointer mb--10"
+						>
 							<input
 								type="checkbox"
 								name="participant"
@@ -122,17 +126,25 @@ const AddExpense = () => {
 								checked={participants.includes(person)}
 								onChange={handleCheckboxChange}
 							/>
-							<span className="checkmarks" />
-							<span className="check-person">{person}</span>
+							<span className="checkmarks position--absolute width--30 bg--white border-radius--sm top--0 left--0" />
+							<span className="ml--30">{person}</span>
 						</label>
 					))}
 				</div>
-				<button
-					type="submit"
-					className="submit-btn text--white font-size--browser-default pointer border-radius--sm mt--16"
-				>
-					Add Expense
-				</button>
+				<div className="flex">
+					<button
+						type="submit"
+						className="submit-btn font--bold text--white font-size--browser-default pointer border-radius--sm mt--16 mr--15"
+					>
+						Add Expense
+					</button>
+					<Link
+						to="/expense-list"
+						className="submit-btn font--bold text--white font-size--browser-default pointer border-radius--sm mt--16"
+					>
+						Back to Expense List
+					</Link>
+				</div>
 			</form>
 			{errorMessage && <p className="error-message mt--10">{errorMessage}</p>}
 		</div>

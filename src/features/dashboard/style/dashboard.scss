@@ -2,6 +2,9 @@
 
 //AddExpense
 .add-expense {
+	background-color: #ebebeb;
+	height: calc(100vh - 40px);
+
 	.form {
 		display: flex;
 		flex-direction: column;
@@ -36,43 +39,33 @@
 
 // ExpenseList
 .expense-list {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	padding: 20px;
+	background-color: #ebebeb;
+	min-height: calc(100vh - 40px);
 
 	h1 {
-		font-size: 32px;
-		margin-bottom: 20px;
 		color: #333;
 	}
 
 	.expenses {
-		margin-bottom: 20px;
-
 		h2 {
-			font-size: 24px;
-			margin-bottom: 10px;
 			color: #333;
 		}
 	}
 
 	.expense {
-		background-color: #f5f5f5;
-		padding: 10px;
-		margin-bottom: 10px;
-		text-align: left;
+		width: 300px;
+		border: 1px solid #333;
 
 		p {
-			margin: 5px 0;
 			color: #333;
+		}
+
+		.individual-expense {
+			border-top: 1px solid gray;
 		}
 	}
 
-	.no-expenses-message,
-	.no-differences-message {
-		margin-top: 20px;
+	.no-expenses-message {
 		color: #666;
 	}
 
@@ -86,7 +79,6 @@
 		}
 
 		p {
-			margin: 5px 0;
 			color: #333;
 		}
 	}
@@ -94,15 +86,10 @@
 	.add-expense-link,
 	.settled-expenses-button {
 		display: inline-block;
-		margin-top: 20px;
 		padding: 10px 20px;
-		font-size: 16px;
-		color: #fff;
 		background-color: #007bff;
 		border: none;
-		border-radius: 4px;
 		text-decoration: none;
-		cursor: pointer;
 		transition: background-color 0.3s ease;
 
 		&:hover {
@@ -110,45 +97,32 @@
 		}
 	}
 
-	.total-owed {
-		margin-top: 20px;
+	.owed-section {
+		.difference-box {
+			border: 3px solid white;
+			padding: 10px;
+		}
 
 		.green {
 			color: green;
-			font-weight: bold;
 		}
 
 		.red {
 			color: red;
-			font-weight: bold;
 		}
 	}
 }
 
 .check-wrapper {
 	display: block;
-	position: relative;
-	font-size: 22px;
+	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-	user-select: none;
-	font-weight: 500;
-
-	.check-person {
-		margin-left: 30px;
-	}
 }
 
 .checkmarks {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 18px;
-	background-color: #ffffff;
-	border-radius: 4px;
 	height: 30px;
-	width: 30px;
 	border: 1px solid black;
 
 	&::after {
@@ -179,15 +153,23 @@
 
 //Settled Screen
 .settled-expense-list {
+	background-color: #ebebeb;
+	min-height: calc(100vh - 40px);
+
 	h1 {
 		color: #333;
 	}
 
 	.expense {
+		width: 300px;
 		background-color: #f5f5f5;
 
 		p {
 			color: #333;
+		}
+
+		.green {
+			color: green;
 		}
 	}
 
@@ -212,7 +194,7 @@
 //Welcome Screen
 .welcome-screen {
 	height: 100vh;
-	background-color: #f8f8f8;
+	background-color: #ebebeb;
 
 	h1 {
 		color: #333;
