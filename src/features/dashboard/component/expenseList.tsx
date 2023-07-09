@@ -7,6 +7,8 @@ import '../style/dashboard.scss';
 
 const ExpenseList = () => {
 	const [expenses, setExpenses] = useState<IExpense[]>([]);
+	const [totalOwedToYou, setTotalOwedToYou] = useState<number>(0);
+	const [totalOwedByYou, setTotalOwedByYou] = useState<number>(0);
 
 	const navigate = useNavigate();
 
@@ -31,6 +33,29 @@ const ExpenseList = () => {
 		}
 	}, []);
 
+	useEffect(() => {
+		let owedToYou = 0;
+		let owedByYou = 0;
+
+		expenses.forEach((expense) => {
+			const { amount, paidBy, participants } = expense;
+			const share = amount / participants.length;
+
+			participants.forEach((participant) => {
+				if (participant !== paidBy) {
+					if (participant === 'You') {
+						owedByYou += share;
+					} else if (paidBy === 'You') {
+						owedToYou += share;
+					}
+				}
+			});
+		});
+
+		setTotalOwedToYou(owedToYou);
+		setTotalOwedByYou(owedByYou);
+	}, [expenses]);
+
 	const handleSettlePayment = (index: number) => {
 		const updatedExpenses = [...expenses];
 		const settledExpense = updatedExpenses.splice(index, 1)[0];
@@ -50,69 +75,26 @@ const ExpenseList = () => {
 	const calculateDifference = (expense: IExpense) => {
 		const { amount, paidBy, participants } = expense;
 		const share = amount / participants.length;
-		const owedStatements: string[] = [];
+		const owedStatements: JSX.Element[] = [];
 
 		participants.forEach((participant) => {
 			if (participant !== paidBy) {
-				owedStatements.push(`${participant} owes ${paidBy} $${share.toFixed(2)}`);
+				const isPaidByYou = paidBy === 'You';
+				const isParticipantYou = participant === 'You';
+				const shareColor = isPaidByYou ? 'green' : isParticipantYou ? 'red' : 'black';
+				const shareStatement = `${participant} owes ${paidBy} $${share.toFixed(2)}`;
+
+				const owedStatement = (
+					<p key={shareStatement} style={{ color: shareColor }}>
+						{shareStatement}
+					</p>
+				);
+				owedStatements.push(owedStatement);
 			}
 		});
 
-		return owedStatements.join('\n');
+		return owedStatements;
 	};
-
-	const calculateDifferencePerson = () => {
-		let totalOwe = 0;
-		let totalLent = 0;
-		const owedStatements: string[] = [];
-		const individualOwe: { [participant: string]: number } = {};
-
-		expenses.forEach((expense) => {
-			const { amount, paidBy, participants } = expense;
-			const share = amount / participants.length;
-
-			if (participants.includes('You')) {
-				if (paidBy === 'You') {
-					participants
-						.filter((participant) => participant !== paidBy)
-						.forEach((participant) => {
-							owedStatements.push(`${participant} owes You $${share.toFixed(2)}`);
-							totalOwe += share;
-
-							if (individualOwe[participant]) {
-								individualOwe[participant] += share;
-							} else {
-								individualOwe[participant] = share;
-							}
-						});
-				} else {
-					owedStatements.push(`You owe ${paidBy} $${share.toFixed(2)}`);
-					totalOwe += share;
-
-					if (individualOwe[paidBy]) {
-						individualOwe[paidBy] -= share;
-					} else {
-						individualOwe[paidBy] = -share;
-					}
-				}
-			} else if (paidBy === 'You') {
-				totalLent += share;
-
-				participants.forEach((participant) => {
-					if (individualOwe[participant]) {
-						individualOwe[participant] += share;
-					} else {
-						individualOwe[participant] = share;
-					}
-				});
-			}
-		});
-
-		const totalDifference = totalOwe - totalLent;
-		return { owedStatements, individualOwe, totalDifference };
-	};
-
-	const { owedStatements, totalDifference, individualOwe } = calculateDifferencePerson();
 
 	const pendingExpenses = expenses.filter((expense) => !expense.settled);
 
@@ -127,31 +109,14 @@ const ExpenseList = () => {
 					Settled Expenses
 				</button>
 			</div>
-			<div className="differences">
-				<h2>Differences</h2>
-				{owedStatements.length > 0 ? (
-					<div>
-						<p>Total Difference for You: {totalDifference.toFixed(2)}</p>
-						<h3>Individual Amounts</h3>
-						{owedStatements.map((statement, index) => (
-							<p key={index}>{statement}</p>
-						))}
-						{Object.entries(individualOwe).length > 0 ? (
-							<div>
-								<h3>Individual Owes to You</h3>
-								{Object.entries(individualOwe).map(([participant, oweAmount]) => (
-									<p key={participant}>
-										{participant} owes You ${oweAmount.toFixed(2)}
-									</p>
-								))}
-							</div>
-						) : (
-							<p className="no-differences-message">No individual owes to display.</p>
-						)}
-					</div>
-				) : (
-					<p className="no-differences-message">No differences for you to display.</p>
-				)}
+			<h2>Total Owed</h2>
+			<div className="total-owed">
+				<p>
+					Participants owe You: <span style={{ color: 'green' }}>${totalOwedToYou.toFixed(2)}</span>
+				</p>
+				<p>
+					You owe Participants: <span style={{ color: 'red' }}>${totalOwedByYou.toFixed(2)}</span>
+				</p>
 			</div>
 			<div className="expenses">
 				<h2>Pending Expenses</h2>
@@ -163,7 +128,7 @@ const ExpenseList = () => {
 							<p>Paid By: {expense.paidBy}</p>
 							<p>Participants: {expense.participants.join(', ')}</p>
 							<button onClick={() => handleSettlePayment(index)}>Settle Payment</button>
-							<p>{calculateDifference(expense)}</p>
+							{calculateDifference(expense)}
 						</div>
 					))
 				) : (
