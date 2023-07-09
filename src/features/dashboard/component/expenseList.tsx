@@ -118,30 +118,30 @@ const ExpenseList = () => {
 			<div className="total-owed">
 				<h2>Total Owed</h2>
 				<div className="owed-section">
-					<p>
+					<div>
 						Participants owe You:
 						{participantsOweYou.length > 0 ? (
 							participantsOweYou.map(({ participant, amount }, index) => (
-								<span key={index} className="owed-amount green">
+								<p key={index} className="green">
 									{participant} owes You ${amount.toFixed(2)}
-								</span>
+								</p>
 							))
 						) : (
 							<span>No participants owe You</span>
 						)}
-					</p>
-					<p>
+					</div>
+					<div>
 						You owe Participants:
 						{youOweParticipants.length > 0 ? (
 							youOweParticipants.map(({ participant, amount }, index) => (
-								<span key={index} className="owed-amount red">
+								<p key={index} className="red">
 									You owe {participant} ${amount.toFixed(2)}
-								</span>
+								</p>
 							))
 						) : (
 							<span>You dont owe anyone</span>
 						)}
-					</p>
+					</div>
 				</div>
 			</div>
 			<div className="expenses">

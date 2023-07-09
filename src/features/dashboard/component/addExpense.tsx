@@ -63,26 +63,46 @@ const AddExpense = () => {
 	};
 
 	return (
-		<div className="add-expense">
-			<h1>Add Expense</h1>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label htmlFor="description">Description</label>
+		<div className="add-expense flex flex--column align-items--center mt--30">
+			<h1 className="mb--32">Add Expense</h1>
+			<form onSubmit={handleSubmit} className="form">
+				<div className="flex flex--column mb--16">
+					<label htmlFor="description" className="mb--8">
+						Description
+					</label>
 					<input
 						type="text"
 						id="description"
 						name="description"
 						value={description}
 						onChange={handleInputChange}
+						className="form-input"
 					/>
 				</div>
-				<div>
-					<label htmlFor="amount">Amount</label>
-					<input type="number" id="amount" name="amount" value={amount} onChange={handleInputChange} />
+				<div className="flex flex--column mb--16">
+					<label htmlFor="amount" className="mb--8">
+						Amount
+					</label>
+					<input
+						type="number"
+						className="form-input"
+						id="amount"
+						name="amount"
+						value={amount}
+						onChange={handleInputChange}
+					/>
 				</div>
-				<div>
-					<label htmlFor="paidBy">Paid By</label>
-					<select id="paidBy" name="paidBy" value={paidBy} onChange={handleDropdownChange}>
+				<div className="flex flex--column mb--16">
+					<label htmlFor="paidBy" className="mb--8">
+						Paid By
+					</label>
+					<select
+						id="paidBy"
+						name="paidBy"
+						className="form-input"
+						value={paidBy}
+						onChange={handleDropdownChange}
+					>
 						<option value="">Select Person</option>
 						{people.map((person, index) => (
 							<option key={index} value={person}>
@@ -91,10 +111,10 @@ const AddExpense = () => {
 						))}
 					</select>
 				</div>
-				<div>
-					<p>Participants</p>
+				<div className="flex flex--column mb--16">
+					<p className="mt--10">Participants</p>
 					{people.map((person, index) => (
-						<label key={index} className="check-wrapper pointer">
+						<label key={index} className="check-wrapper pointer mb--10">
 							<input
 								type="checkbox"
 								name="participant"
@@ -107,9 +127,14 @@ const AddExpense = () => {
 						</label>
 					))}
 				</div>
-				<button type="submit">Add Expense</button>
+				<button
+					type="submit"
+					className="submit-btn text--white font-size--browser-default pointer border-radius--sm mt--16"
+				>
+					Add Expense
+				</button>
 			</form>
-			{errorMessage && <p className="error-message">{errorMessage}</p>}
+			{errorMessage && <p className="error-message mt--10">{errorMessage}</p>}
 		</div>
 	);
 };
