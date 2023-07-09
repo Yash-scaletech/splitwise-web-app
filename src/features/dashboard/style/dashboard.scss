@@ -137,6 +137,26 @@
 			background-color: #0056b3;
 		}
 	}
+
+	.total-owed {
+		margin-top: 20px;
+
+		p {
+			margin: 5px 0;
+
+			span {
+				font-weight: bold;
+			}
+
+			.green {
+				color: green;
+			}
+
+			.red {
+				color: red;
+			}
+		}
+	}
 }
 
 .check-wrapper {

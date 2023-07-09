@@ -5,3 +5,8 @@ export interface IExpense {
 	participants: string[];
 	settled: boolean;
 }
+
+export interface IOwedParticipant {
+	participant: string;
+	amount: number;
+}

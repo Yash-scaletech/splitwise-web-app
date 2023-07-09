@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IExpense } from '../interface/dashboard';
+import { IExpense, IOwedParticipant } from '../interface/dashboard';
 
 import '../style/dashboard.scss';
 
 const ExpenseList = () => {
 	const [expenses, setExpenses] = useState<IExpense[]>([]);
-	const [totalOwedToYou, setTotalOwedToYou] = useState<number>(0);
-	const [totalOwedByYou, setTotalOwedByYou] = useState<number>(0);
+	const [participantsOweYou, setParticipantsOweYou] = useState<IOwedParticipant[]>([]);
+	const [youOweParticipants, setYouOweParticipants] = useState<IOwedParticipant[]>([]);
 
 	const navigate = useNavigate();
 
@@ -34,8 +34,8 @@ const ExpenseList = () => {
 	}, []);
 
 	useEffect(() => {
-		let owedToYou = 0;
-		let owedByYou = 0;
+		const participantsOweYouMap = new Map<string, number>();
+		const youOweParticipantsMap = new Map<string, number>();
 
 		expenses.forEach((expense) => {
 			const { amount, paidBy, participants } = expense;
@@ -44,16 +44,22 @@ const ExpenseList = () => {
 			participants.forEach((participant) => {
 				if (participant !== paidBy) {
 					if (participant === 'You') {
-						owedByYou += share;
+						const currentAmount = youOweParticipantsMap.get(paidBy) || 0;
+						youOweParticipantsMap.set(paidBy, currentAmount + share);
 					} else if (paidBy === 'You') {
-						owedToYou += share;
+						const currentAmount = participantsOweYouMap.get(participant) || 0;
+						participantsOweYouMap.set(participant, currentAmount + share);
 					}
 				}
 			});
 		});
 
-		setTotalOwedToYou(owedToYou);
-		setTotalOwedByYou(owedByYou);
+		setParticipantsOweYou(
+			Array.from(participantsOweYouMap.entries()).map(([participant, amount]) => ({ participant, amount }))
+		);
+		setYouOweParticipants(
+			Array.from(youOweParticipantsMap.entries()).map(([participant, amount]) => ({ participant, amount }))
+		);
 	}, [expenses]);
 
 	const handleSettlePayment = (index: number) => {
@@ -109,14 +115,34 @@ const ExpenseList = () => {
 					Settled Expenses
 				</button>
 			</div>
-			<h2>Total Owed</h2>
 			<div className="total-owed">
-				<p>
-					Participants owe You: <span style={{ color: 'green' }}>${totalOwedToYou.toFixed(2)}</span>
-				</p>
-				<p>
-					You owe Participants: <span style={{ color: 'red' }}>${totalOwedByYou.toFixed(2)}</span>
-				</p>
+				<h2>Total Owed</h2>
+				<div className="owed-section">
+					<p>
+						Participants owe You:
+						{participantsOweYou.length > 0 ? (
+							participantsOweYou.map(({ participant, amount }, index) => (
+								<span key={index} className="owed-amount green">
+									{participant} owes You ${amount.toFixed(2)}
+								</span>
+							))
+						) : (
+							<span>No participants owe You</span>
+						)}
+					</p>
+					<p>
+						You owe Participants:
+						{youOweParticipants.length > 0 ? (
+							youOweParticipants.map(({ participant, amount }, index) => (
+								<span key={index} className="owed-amount red">
+									You owe {participant} ${amount.toFixed(2)}
+								</span>
+							))
+						) : (
+							<span>You dont owe anyone</span>
+						)}
+					</p>
+				</div>
 			</div>
 			<div className="expenses">
 				<h2>Pending Expenses</h2>
@@ -127,7 +153,9 @@ const ExpenseList = () => {
 							<p>Amount: {expense.amount}</p>
 							<p>Paid By: {expense.paidBy}</p>
 							<p>Participants: {expense.participants.join(', ')}</p>
-							<button onClick={() => handleSettlePayment(index)}>Settle Payment</button>
+							<button onClick={() => handleSettlePayment(index)} className="settled-expenses-button">
+								Settle Payment
+							</button>
 							{calculateDifference(expense)}
 						</div>
 					))
