@@ -130,8 +130,8 @@ const ExpenseList = () => {
 					Settled Expenses
 				</button>
 			</div>
-			<div className="owed-section width--full flex justify-content--around mt--20">
-				<div className="difference-box">
+			<div className="owed-section width--full flex flex--wrap justify-content--around mt--20">
+				<div className="difference-box mb--20">
 					<p className="font-size--23 font--bold line-height--28 mb--20">Participants owe You:</p>
 					{participantsOweYou.length > 0 ? (
 						participantsOweYou.map(({ participant, amount }, index) => (
@@ -145,7 +145,7 @@ const ExpenseList = () => {
 						</span>
 					)}
 				</div>
-				<div className="difference-box">
+				<div className="difference-box mb--20">
 					<p className="font-size--23 font--bold line-height--28 mb--20">You owe Participants:</p>
 					{youOweParticipants.length > 0 ? (
 						youOweParticipants.map(({ participant, amount }, index) => (
